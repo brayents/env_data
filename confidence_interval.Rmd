@@ -1,0 +1,49 @@
+---
+title: "CI"
+author: "Briantama Asmara"
+date: "10/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+qnorm(c(0.05, 0.95))
+```
+
+
+
+```{r}
+qnorm(c(0.1, 0.9))
+```
+```{r}
+qt(p = c(0.025, 0.975), df=10)
+```
+
+```{r}
+qt(p = c(0.025, 0.975), df=60)
+```
+```{r}
+2-1.999624
+2.000298-2
+```
+
+
+
+```{r}
+qt(p = c(0.025, 0.975), df=473)
+```
+
+```{r}
+qt(p = c(3.845713, 16.154287))
+```
+```{r}
+crit_upper <-qt(0.05/2, 49, lower.tail=FALSE)
+crit_upper
+crit_lower <-qt(0.05/2, 49, lower.tail=TRUE)
+crit_lower
+
+```
+

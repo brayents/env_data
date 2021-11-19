@@ -1,0 +1,65 @@
+---
+title: "Untitled"
+author: "Briantama Asmara"
+date: "9/16/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("palmerpenguins")
+install.packages("here")
+```
+
+```{r}
+require(palmerpenguins)
+require(here)
+```
+
+```{r}
+penguins = data.frame(penguins)
+
+```
+
+```{r}
+mean(penguins$body_mass_g)
+```
+
+```{r}
+head(penguins)
+```
+
+```{r}
+mean(penguins$body_mass_g, na.rm=TRUE)
+```
+```{r}
+boxplot(penguins$bill_depth_mm)
+
+```
+
+
+```{r}
+boxplot(bill_depth_mm ~ sex, data = penguins)
+```
+
+```{r}
+par(mfrow = c(1, 2))
+boxplot(penguins$bill_depth_mm)
+boxplot(bill_depth_mm ~ sex, data = penguins)
+```
+
+```{r}
+coplot(body_mass_g ~ bill_depth_mm | sex, data = penguins)
+```
+
+
+```{r}
+require(here)
+png(filename = here("basic_histogram.png"), width = 800, height = 600)
+coplot(body_mass_g ~ bill_depth_mm | sex, data = penguins)
+dev.off()
+```
+

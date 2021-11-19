@@ -1,0 +1,288 @@
+---
+title: "R Data Exploration Assignment"
+author: "Briantama Asmara"
+date: "9/16/2021"
+output:
+    html_document:
+      theme: darkly
+      highlight: espresso
+      toc: true
+      toc_depth: 3
+      toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Install and load here package
+```{r}
+# Sorry the error keeps happening when I tried to knit. Nonetheless, it works in my computer.
+# install.packages("here", error=TRUE)
+```
+
+```{r}
+require("here")
+```
+
+```{r}
+here()
+```
+
+```{r}
+getwd()
+here()
+```
+# Load data
+
+```{r}
+dat_habitat = data.frame(read.csv(here("data", "hab.sta.csv")))
+```
+
+```{r}
+head(dat_habitat)
+```
+# Defining Data Variable
+
+```{r}
+dat_slope = dat_habitat$slope
+aspect = dat_habitat$aspect
+elevation = dat_habitat$elev
+basal_tot = dat_habitat$ba.tot
+```
+
+
+# Q1 Terrain Histogram
+
+```{r, echo=TRUE, fig.height=10, fig.width=20}
+par(mfrow = c(1, 3))
+
+hist(dat_slope,
+      breaks = 11,
+      main= "Histogram of Slope",
+      xlab= "Slope (%)",
+      )
+
+hist(aspect,
+      breaks = 24,
+      main= "Histogram of Aspects",
+      xlab= "Aspect (degrees)",
+      )
+
+hist(elevation,
+      breaks = 15,
+      main= "Histogram of Elevation",
+      xlab= "Elevation (meters)",
+      )
+
+
+```
+
+# Q2 Elevation Histogram Interpretation
+
+```{r}
+summary(elevation)
+
+```
+
+I think most of sampling sites are in the moderate terrain elevation, but slightly towards the mid to low-elevation sampling sites. When calculating the mean of elevation data, it shows 400. The elevation at 400 meters is the highest among other elevation sites. The histogram shows the normal distribution due to its shape (data distributed around the center of data, even it is kind of skewed towards the low-elevation site/left). 
+
+
+# Q3 Slope Units
+
+```{r}
+summary(dat_slope)
+
+```
+
+According to the metadata, the slope data using percentage unit (%)
+
+# Q4 Slope Histogram Interpretation
+
+```{r}
+summary(dat_slope)
+
+```
+
+
+The maximum slopes of data is 110, that equals to nearly 45 degrees. Most of the data were in range of 40 and 60, which means the sampling sites were taken at moderate slopes, rather steep and undulating. Flat sampling sites is a minority on the slope dataset. There is a mixture on the data because the histogram shows the normal distribution (distributed near the center of histogram/bell-shaped)
+
+# Q5 Aspect
+
+The aspect dataset uses degrees according to the metadata. The aspect shows where the direction of the slope faces. It usually shows in degree units that translates to the clockwise compass direction. For example, 90 is East and 180 is South, etc.
+
+# Q6 Aspect Histogram Interpretation
+
+```{r}
+summary(aspect)
+```
+
+I think most of the slopes tend to face the Southwest direction instead of North. There is a high number facing the north direction, but it's only the second majority of data. The closest direction around the north (NE, NW) is lower compared to the tendency of sites heading Southwest direction. It is evenly distributed, even the shape is not exactly bell shaped.
+
+# Q7 Terrain/Basal Area Linear Models
+
+```{r}
+line_point_slope = function(x, x1, y1, slope)
+{
+  get_y_intercept = 
+    function(x1, y1, slope) 
+      return(-(x1 * slope) + y1)
+  
+  linear = 
+    function(x, yint, slope) 
+      return(yint + x * slope)
+  
+  return(linear(x, get_y_intercept(x1, y1, slope), slope))
+}
+```
+
+## Estimating the slope
+
+Sorry if I was wrong about estimating the value of slopes for linear function
+```{r}
+lm(dat_slope ~ basal_tot)
+lm(aspect ~ basal_tot)
+lm(elevation ~ basal_tot)
+```
+
+Scatterplot
+
+```{r, echo=TRUE, fig.height=10, fig.width=20}
+par(mfrow = c(1, 3))
+
+plot_slope = plot(x= dat_slope, 
+                  y = basal_tot,
+                  main="Slope vs Total Basal Area",
+                  xlab="Slope",
+                  ylab="Basal area",
+                  cex=1,
+                  pch=2
+                  )
+curve(
+  line_point_slope(
+    x, 
+    mean(dat_slope), 
+    mean(basal_tot),
+    0.05798), 
+    add = TRUE)
+
+plot_aspect = plot(x= aspect, 
+                  y = basal_tot,
+                  main="Aspect vs Total Basal Area",
+                  xlab="Aspect",
+                  ylab="Basal area",
+                  cex=1,
+                  pch=25)
+
+curve(
+  line_point_slope(
+    x, 
+    mean(aspect), 
+    mean(basal_tot),
+    0.3479), 
+    add = TRUE)
+
+
+plot_elev = plot(x= elevation, 
+                  y = basal_tot,
+                  main="Elevation vs Total Basal Area",
+                  xlab="Elevation",
+                  ylab="Basal area",
+                  cex=1)
+
+curve(
+  line_point_slope(
+    x, 
+    mean(elevation), 
+    mean(basal_tot),
+    0.1956), 
+    add = TRUE)
+
+```
+
+Combined Scatterplot and Histogram
+
+```{r, echo=TRUE, fig.height=20, fig.width=20}
+par(mfrow = c(3, 2))
+
+hist(dat_slope,
+      breaks = 11,
+      main= "Histogram of Slope",
+      xlab= "Slope (%)",
+      )
+
+
+plot_slope = plot(x= dat_slope, 
+                  y = basal_tot,
+                  main="Slope vs Total Basal Area",
+                  xlab="Slope",
+                  ylab="Basal area",
+                  cex=1
+                  
+                  )
+curve(
+  line_point_slope(
+    x, 
+    mean(dat_slope), 
+    mean(basal_tot),
+    0.05798), 
+    add = TRUE,
+    col="red")
+
+
+hist(aspect,
+      breaks = 24,
+      main= "Histogram of Aspects",
+      xlab= "Aspect (degrees)",
+      )
+plot_aspect = plot(x= aspect, 
+                  y = basal_tot,
+                  main="Aspect vs Total Basal Area",
+                  xlab="Aspect",
+                  ylab="Basal area",
+                  cex=1
+                  )
+
+curve(
+  line_point_slope(
+    x, 
+    mean(aspect), 
+    mean(basal_tot),
+    0.3479), 
+    add = TRUE,
+    col="orange")
+
+
+hist(elevation,
+      breaks = 15,
+      main= "Histogram of Elevation",
+      xlab= "Elevation (meters)",
+      )
+
+plot_elev = plot(x= elevation, 
+                  y = basal_tot,
+                  main="Elevation vs Total Basal Area",
+                  xlab="Elevation",
+                  ylab="Basal area",
+                  cex=1,
+                  )
+
+curve(
+  line_point_slope(
+    x, 
+    mean(elevation), 
+    mean(basal_tot),
+    0.1956), 
+    add = TRUE,
+    col="blue")
+```
+
+# Q8 Terrain/Basal Model Interpretation
+
+The terrain variables shows strong relationship, except for the slopes. The relationship between slopes and total basal area is weak due to lower slopes used for the model fit line. All of them have linear relationship according to the scatter plot.
+
+I think the slope model is a good fit, but it looks bad due to outliers inside the data, especially the highest elevation. 
+
+In contrast, the aspect model could be a bad fit for the data because most of the data are in the lower aspects. Also, the histogram shows there is low differences between aspects and the line slopes should be lower due to low correlation (data is scattered everywhere/rarely overlap)
+
+The elevation shows a good fit. Looking at the plot, most of the data are centered around the line and overlapped with each other.

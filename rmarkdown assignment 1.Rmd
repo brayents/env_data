@@ -1,0 +1,48 @@
+---
+title: "R Markdown Documents - Part 1"
+subtitle: "Analysis of Environmental Data"
+author: "Briantama Asmara"
+date: "9/12/2021"
+
+output:
+    html_document:
+      theme: darkly
+      highlight: espresso
+      toc: true
+      number_sections: true
+      toc_depth: 3
+      toc_float: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction 
+
+Hi! My name is **Briantama Asmara**. I am a first year student in *MS thesis in Environmental Conservation - Water, Wetland, and Watersheds* at University of Massachusetts-Amherst. I will study the relationship between indigenous community with water and environmental issues.
+
+# Concepts List
+In order to better analyze my research study, there are concepts that I would like to achieve from this course.
+
+1. Basic Statistical Analysis for Environmental Data
+
+2. Hypothesis Testing
+
+3. Correlation and Prediction of Environmental Data in R
+
+4. Data Management in R
+
+# Course List
+For this Fall 2021, I am excited to take several courses in the department. Here is my list:
+
+* Analysis of Environmental Data
+
+* Research Concepts
+
+* Ecological Economics
+
+* Economics and Water Policy
+
+

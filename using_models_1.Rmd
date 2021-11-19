@@ -1,0 +1,265 @@
+---
+title: "using_models_1"
+author: "Briantama Asmara"
+date: "10/26/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data preparation
+
+```{r}
+require(here)
+here()
+```
+
+```{r}
+catrate = data.frame(read.csv(here("data", "catrate.csv")))
+head(catrate)
+```
+
+```{r}
+summary(catrate)
+```
+
+```{r}
+hist(catrate$cat.rate,
+     main = "Histogram of Catasthrope Rates",
+     xlab = "Catasthrope Rate")
+```
+# Shapiro Test
+
+```{r}
+shapiro.test(catrate$cat.rate)
+```
+# t-test
+
+```{r}
+t.test(catrate$cat.rate, mu = 0.3)
+```
+# One-sided Alternative Hypothesis
+```{r}
+t.test(catrate$cat.rate, mu = 0.3, alternative = "greater")
+```
+
+```{r}
+t.test(catrate$cat.rate, mu = 0.3, alternative = "less")
+```
+# Wilcoxon Test
+```{r}
+wilcox.test(catrate$cat.rate, mu = 2/7, alternative = "greater")
+```
+
+# Two Sample Means Comparison
+```{r}
+require(palmerpenguins)
+penguin_dat = droplevels(subset(penguins, species != "Gentoo"))
+```
+```{r}
+summary(penguin_dat)
+```
+
+```{r}
+boxplot(
+  flipper_length_mm ~ species, 
+  data = penguin_dat,
+  ylab = "Flipper Length (mm)")
+```
+
+# Testing for Normality
+```{r}
+dat_adelie = subset(penguin_dat, 
+                    species == "Adelie")
+dat_chinstrap = subset(penguin_dat, 
+                       species == "Chinstrap")
+```
+
+# Parametric and Non-parametric
+
+```{r}
+head(dat_adelie)
+
+```
+
+```{r}
+shapiro.test(dat_adelie$bill_length_mm)
+shapiro.test(dat_chinstrap$bill_length_mm)
+```
+aggregate?
+
+```{r}
+t.test(flipper_length_mm ~ species, 
+       data = penguin_dat,
+       )
+```
+```{r}
+wilcox.test(flipper_length_mm ~ species, 
+       data = penguin_dat,
+       )
+```
+
+```{r}
+levels(penguin_dat$species)
+```
+
+
+# Q1 Catasthropic Rate Histogram
+
+```{r}
+hist(catrate$cat.rate,
+     main = "Histogram of Salamender \nReproduction Catasthrope Rates",
+     xlab = "Catasthrope Rate")
+```
+
+# Q2 Normality Test
+
+```{r}
+shapiro.test(catrate$cat.rate)
+```
+
+The p-value is 0.04097
+
+
+# Q3 Normality Test
+
+The null-hypothesis is rejected due to low p-values. Thus, there is good evidence against the null-hypothesis; the sample does not come from normally distributed population.
+
+# Q4 Normality Test
+
+According to the p-value, it is lower (0.04) than the value of alpha (0.05). Therefore, it would suggest that there is a strong evidence that our sample is non-normally distributed. However, due to the slight differences (only 0.01), there is a probability that it could go either way (Type 1 error). I would prefer to state "good evidence" rather than "strong.
+
+
+# Q5 t-test 1
+
+Since we already know the data of both values, therefore I only use the two-tailed test
+
+```{r}
+t.test(catrate$cat.rate, mu = 2/7)
+```
+
+
+# Q6 t-test 1
+
+At first, we want to know whether the catastrophe rate has the similar value with late-filling rate. However, what we have from the observation value of catastrophes rate is significantly different from what we expect from the late-filling rate; it can be lower or even greater, we don't exactly know. This is based on there is not enough support to form a convincing conclusion on the similarities of the two samples
+
+
+# Q7 t-test 1
+
+This is two-tailed test because we only care whether two values are different from each other. It could go to two directions, it can be lower or even greater than the value we tested.
+
+# Q8 t-test 2
+
+The result of p-value from the t-test is 0.01193.
+
+Since there is a strong evidence to deny the similarities between catastrophe rate and late-filling rate, we conclude that they are different from one another. However, there is still a small portion of probability (alpha = 1.1%) that, unfortunately, both samples have the same value. In that small chances of happening, they turned out to not even have any slightest differences. We picked the wrong conclusion. As we already rejected that, and it turns out to be a wrong decision, this is called "false positive". We picked the wrong decision to reject the null hypothesis when it should be accepted as a null hypothesis because they have the same value.
+
+
+# Q9 t-test 2
+
+From our latest calculations, it shows the confidence interval of our t-test:
+
+95 percent confidence interval:
+ 0.3526250 0.7261295
+ 
+ This means the confidence interval spans from 0.35... to 0.7261...
+ 
+ It didn't include zero, since the range of confidence interval only includes number from 0.35... to 0.7261...
+
+# Q10 t-test 2
+
+Yes, there is a strong evidence to reject null-hypothesis since our p-value shows 0.01193, which means lower than 0.05. Since there is only 1.2 percent of probability that suggests otherwise, it is relatively strong evidence to reach a conclusion to reject null hyothesis.
+
+# Q11 Wilcoxon test 1
+
+```{r}
+wilcox.test(catrate$cat.rate, mu = 2 / 7)
+```
+
+
+# Q12 Wilcoxon test 1
+p-value from t-test: 0.0119
+
+p-value from Wilcoxon test: 0.006275
+
+The p-value from Wilcoxon test is slightly lower compared to the result of t-test. This is may related on their approach; t-test use parametric approach, while Wilcoxon incorporate nonparametric approach.
+
+# Q13 Wilcoxon test 1
+
+Yes, there was a strong proof of that to reject null hypothesis. Both results show the p-value of 0.0119 and 0.006, respectively. That means they are below the 0.05, thus we can conclude to reject the null hypothesis. Also, both of the tests show that the data is not normally distributed
+
+# Q14 Test Comparison
+
+Overall, the results is different, but not by far. The value of Wilcoxon test has a stronger evidence to reject the null-hypothesis (0.006), rather than the p-value result from the t-test. However, it doesn't entirely mean that it is better. The Wilcoxon test maybe better in this term due to lower sample size, but despite having a stronger evidence, I would prefer to choose t-test on a large sample.
+
+# Q15 Test Comparison
+
+```{r}
+summary(catrate$cat.rate)
+```
+
+```{r}
+boxplot(catrate$cat.rate, 2/7,
+        horizontal = TRUE,
+        xlab = "Cat.rate")
+```
+
+
+```{r}
+hist(catrate$cat.rate,
+     main = "Histogram of Salamender \nReproduction Catasthrope Rates",
+     xlab = "Catasthrope Rate")
+```
+
+Based on the numerical and graphical data exploration, our sample frequency is pretty low (13 samples). Due to the consideration of low sample sizes of catastrophe data that we had been using so far, the results of Wilcoxon seems more appropriate and provide relatively accurate assessment. Despite some disadvantages of its weak statistical inferences in a general sense, the Wilcoxon test also show a stronger evidence to reject the null hypothesis.
+
+
+
+# Q16 Flippers-Normality Tests
+
+```{r}
+dat_adelie = subset(penguin_dat, 
+                    species == "Adelie")
+dat_chinstrap = subset(penguin_dat, 
+                       species == "Chinstrap")
+```
+
+```{r}
+shapiro.test(dat_adelie$flipper_length_mm)
+shapiro.test(dat_chinstrap$flipper_length_mm)
+```
+
+# Q17 Flippers-Normality Tests
+
+The p-values of Adelie and Chinstrap are 0.72 and 0.81, respectively. In other words, both penguins have p-value of flipper lengths above 0.05. Consequently, there are no differences between the two penguins in terms of flipper length. Since the p-values are far above the threshold of 0.05 significance level, the flipper lengths are normally-distributed for each of the penguins species.
+
+# Q18 Flippers - Histograms
+
+```{r, echo=TRUE, fig.height=5, fig.width=10}
+# I use {r, echo=TRUE, fig.height=5, fig.width=10} but didn't show up when I knitted
+par(mfrow = c(1, 2))
+hist(dat_adelie$flipper_length_mm,
+     xlab = "Flipper length (mm)",
+     main = "Flipper length of Adelie Penguin")
+hist(dat_chinstrap$flipper_length_mm,
+     xlab = "Flipper length (mm)",
+     main = "Flipper length of Chinstrap Penguin")
+
+```
+
+# Q19 Flippers Test
+
+I use one-tailed test. 
+
+I conducted a t-test for the differences between flipper lengths of Adelie and Chinstrap. At first, I thought that the Adelie have a longer flipper length compared to Chinstrap. That is all based on my hypothetical understanding of their flipper to preserve heat, for example. It turns out, after the t-test result came up, it shows a very low values of the differences between the two, only 3.025e-08. That is a very small number. From that value, there is a strong evidence to reject our hypothesis; the flipper length is obviously not have a longer flipper, it is the otherwise. It is highly likely that The flipper length of Adelie is smaller than Chinstrap.
+
+
+# Q20 Flippers Test
+
+```{r}
+t.test(flipper_length_mm ~ species, 
+       data = penguin_dat,
+       alternative = "less")
+```

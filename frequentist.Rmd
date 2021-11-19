@@ -1,0 +1,67 @@
+---
+title: "Frequentist Concept"
+author: "Briantama Asmara"
+date: "10/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Q1 Binomial Probability 1
+```{r}
+dbinom(3,4,0.75)
+```
+
+# Q2 Binomial Probability 2
+```{r}
+pbinom(3,4, 0.75)
+```
+
+# Q3 Binomial Probability 3
+```{r}
+1- pbinom(3,5,0.75)
+```
+
+# Q4 Normal Probability 1
+```{r}
+pnorm(1.2, mean = 2, sd = 2)
+```
+
+# Q5 Normal Probability 2
+```{r}
+1 - pnorm(1.2, mean = 2, sd = 2)
+```
+
+# Q6 Normal Probability 3
+```{r}
+pnorm(3.2, mean=2, sd=2) - pnorm(1.2, mean=2, sd=2)
+```
+
+# Q7 Central Limit Theorem 1
+
+The shape of histogram changes due to increasing sample size to the center (approaching mean values). At first couple of clicks of sample button, the spread of distribution is relatively even on every count. As the sample goes large and larger, it stabilizes to the center of sampling distribution, which I made from determining the alpha and beta value beforehand. However, it takes a while to stabilize due to sample size increase by increment of 1 
+
+# Q8 Central Limit Theorem 2
+Similar to the previous question, the shape continues to change as we hit the sample button. However, there are noticeable differences. The sample from the lower tail decreases, which being shifted to the right or left (like squeeze it to the center). Also, as the sample size gets bigger, it is faster compared to the increment of 1 (like in previous question)
+
+# Q9 Central Limit Theorem 3
+The shape gets distributed more narrow to the center as the sample gets larger. Unlike previous attempts, sample is getting more centralized than before.
+
+
+# Q10 Central Limit Theorem 3
+As I already stated before in Q8, as the sample gets larger and larger, the sampling mean and standard deviation stabilizes. It affects the shape of the sampling distribution, approaching the central (mean of the sampling distribution). The addition of sample of 2, has a huge influence instead of increment of 1. In other words, it is twofold of the initial sample size.
+
+# Q11 Central Limit Theorem 3
+According to the experiments, the two factors are sample size and standard deviation.Sample size stabilizes the standard deviation, making the width of sampling distribution narrower to the center.
+
+# Q12 Library of Babel 1
+```{r}
+25 * 25 * 25
+```
+
+# Q13 Library of Babel 2
+
+(B+1) x (25^(1,312,000))
+

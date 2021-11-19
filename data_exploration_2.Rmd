@@ -1,0 +1,61 @@
+---
+title: "data exploration 2"
+author: "Briantama Asmara"
+date: "9/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Install and require here()
+```{r}
+install.packages("palmerpenguins")
+install.packages("here")
+```
+```{r}
+require(here)
+```
+
+```{r}
+dat_birds = read.csv("https://michaelfrancenelson.github.io/environmental_data/data/bird.sta.csv")
+dat_habitat = read.csv("https://michaelfrancenelson.github.io/environmental_data/data/hab.sta.csv")
+```
+
+
+```{r}
+pairs(iris)
+```
+
+```{r}
+pairs(iris[, c("Petal.Width", "Sepal.Width", "Sepal.Length")])
+```
+
+```{r}
+head(dat_habitat)
+```
+
+
+```{r}
+pairs(dat_habitat[, c("elev", "ba.hard", "snag.sml")],
+      main="Brian's Pairplot of \n Elevation, Basal Hardwood, and Number of Snags",
+      col=
+        adjustcolor(col="orange", alpha.f = 0.2))
+```
+
+```{r}
+head(dat_birds)
+```
+
+```{r}
+hist(dat_birds$WIWA,
+     main = "Histogram of Wilson Wabler\n by Brian",
+     col = 
+       adjustcolor(col="red", alpha.f=0.5),
+     breaks = 5,
+     xlab = "Numbers of Birds Counted",
+     border="blue")
+```
+

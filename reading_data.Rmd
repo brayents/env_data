@@ -1,0 +1,84 @@
+---
+title: "reading_data"
+author: "Briantama Asmara"
+date: "9/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Install and load here package
+```{r}
+# Sorry the error keeps happening when I tried to knit. Nonetheless, it works in my computer.
+# install.packages("here", error=TRUE)
+```
+
+```{r}
+require("here")
+```
+
+```{r}
+here()
+```
+
+```{r}
+getwd()
+here()
+```
+
+# Load the data
+
+```{r}
+dat_catrate = data.frame(read.csv(here("data", "catrate.csv")))
+dat_delomys = data.frame(read.csv(here("data", "delomys.csv")))
+dat_rope = data.frame(read.csv(here("data", "rope.csv")))
+```
+
+# check the data head()
+
+```{r}
+head(dat_catrate)
+head(dat_delomys)
+head(dat_rope)
+```
+# Scatterplot
+## Catrate data
+
+```{r}
+plot(x=dat_catrate$success,
+     y=dat_catrate$cat.rate,
+     main= "Success vs Cat Rate",
+     xlab="Success",
+     ylab="Cat Rate")
+```
+
+## Delomys data
+
+```{r, echo=TRUE, fig.height=20, fig.width=10}
+par(mfrow = c(3, 1))
+plot(x=dat_catrate$success,
+     y=dat_catrate$cat.rate,
+     main= "Brian's Success vs Cat Rate",
+     xlab="Success",
+     ylab="Cat Rate")
+plot(x=dat_delomys$body_mass,
+     y=dat_delomys$body_length,
+     main= "Brian's Delomys Body Mass vs Length",
+     xlab="Body Mass",
+     ylab="Body Length")
+plot(x=dat_rope$p.cut,
+     y=dat_rope$p.strength,
+     main= "Brian's Rope Cut vs its Strength",
+     xlab="Rope cut",
+     ylab="Rope strength")
+```
+```{r}
+plot(x=dat_rope$p.cut,
+     y=dat_rope$p.strength,
+     main= "Brian's Rope Cut vs its Strength",
+     xlab="Rope cut",
+     ylab="Rope strength")
+```
+
