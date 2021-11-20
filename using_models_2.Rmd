@@ -14,96 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 require(palmerpenguins)
 ```
-
-```{r}
-t.test(subset(penguins, species == "Gentoo")$flipper_length_mm)
-```
-
-```{r}
-t.test(x= subset(penguins,
-                 species=="Gentoo")$flipper_length_mm,
-       mu=218)
-```
-
-```{r}
-t.test(x=subset(penguins, species == "Gentoo")$flipper_length_mm,
-       mu = 218,
-       alternative="less")
-```
-
-```{r}
-t.test(
-  x=subset(penguins, species=="Gentoo")$flipper_length_mm,
-  mu=218,
-  alternative = "less"
-)
-```
-
-```{r}
-t.test(flipper_length_mm ~ species, data = subset(penguins, species != "Chinstrap"))
-```
-
-```{r}
-par(mfrow = c(1,2))
-hist(penguins$body_mass_g, breaks = 80, main = "histogram of body mass", xlab = "body mass (g)")
-plot(density(penguins$body_mass_g, na.rm = TRUE), main = "density plot of body mass")
-```
-
-```{r}
-boxplot(body_mass_g ~ species, data=penguins)
-```
-```{r}
-dat_chinstrap = subset(penguins, species == "Chinstrap")
-mean(dat_chinstrap$body_mass_g, na.rm = TRUE)
-```
-
-```{r}
-shapiro.test(dat_chinstrap$body_mass_g)
-```
-
-```{r}
-aggregate(body_mass_g ~ species, data = penguins, FUN = function(x) shapiro.test(x)$p.value)
-```
-
-```{r}
-fit_species = lm(body_mass_g ~ species, data = penguins)
-```
-
-```{r}
-summary(fit_species)
-```
-
-```{r}
-anova(fit_species)
-```
-
-```{r}
-fit_species = lm(body_mass_g ~ species, data = penguins)
-```
-
-```{r}
-summary(fit_species)
-```
-
-```{r}
-anova(fit_species)
-```
-
-```{r}
-boxplot(body_mass_g ~ species, data = penguins)
-```
-
-```{r}
-fit_additive = lm(body_mass_g ~ sex + species, data = penguins)
-```
-
-```{r}
-fit_additive = lm(body_mass_g ~ sex + species, data = penguins)
-```
-
 # Question 1 Re-create the conditional boxplot of penguin body mass conditioned on sex and species.
-
-
 
 ```{r}
 boxplot(body_mass_g ~ sex + species, 
@@ -113,10 +24,65 @@ boxplot(body_mass_g ~ sex + species,
         names = c("female\nAdelie", "male\nAdelie", "female\nChinstrap", "male\nChinstrap", "female\nGentoo", "male\nGentoo"))
 ```
 
+```{r}
+boxplot(body_mass_g ~ sex, 
+        data = penguins,
+        xlab =  "Sex",
+        ylab = "Body Mass (g)"
+        )
+```
+
+```{r}
+boxplot(body_mass_g ~ species, 
+        data = penguins,
+        xlab =  "Species",
+        ylab = "Body Mass (g)"
+        )
+```
+
+
 # Q2 (2 pts.): Based on the boxplots, do you think male penguins (of any species) are significantly heavier than female penguins? Explain your reasoning.
+
+Based on the boxplot, I would say it is not necessarily different for any species in general. The median of male penguins is indeed larger, but not all the penguins. When we only make a boxplot comparing the body mass and sex, we are uncertain whether all the species are heavier than their female counterpart. Also, when you compare the boxplot between the species and body mass, you will see that the Gentoo boxplot is higher than the other two species. There are higher possibilities that when any male or female penguins compared with a Gentoo species, it would be significantly lower. It is hard to tell. It will be more apparent if we could take a further look at adding sex into the boxplot.
 
 # Q3 (2 pts.): Do you think adding sex to a model that already includes species will improve the model fit? Make sure you justify your answer based on the boxplots and not results of a statistical test.
 
+Yes, I would say it depends on the research questions that you want to answer. To illustrate, if you just want to know whether Gentoo is the heaviest penguin, then I believe adding sex would not be necessary. Only by looking at the boxplots between species and body mass, you already have general insights into your research problem. As you explore your penguins data, you find that the median population of male penguins is heavier than the female. You wonder whether it applies to any species or just in general. This is when adding sex into your species boxplot will help a lot to your understanding. The boxplot shows between species, male Adelie is smaller than the female Gentoo. This helps with our model to predict complex relationships in terms of body mass between species and sex.
 
 
+# Q4 (2 pts.): Show the R-code you used to build fit_both.
 
+```{r}
+fit_both = lm(body_mass_g ~ sex * species, data = penguins)
+```
+
+```{r}
+summary(fit_both)
+```
+
+```{r}
+anova(fit_both)
+```
+
+
+# Q5 (2 pts.): What is the base case for the two-way model that includes sex and species?
+
+The best case for that is the intercept (first row); which is sexFemale:speciesAdelie (3368.84)
+
+
+# Q6 (2 pts.): What are the names of the two coefficients (from the first column of the coefficient table) you need to calculate the average mass of female Chinstrap penguins?
+
+We will need the intercept and the speciesChinstrap row names
+
+# Q7 (2 pts.): What is the predicted average mass of female Chinstrap penguins in the interactive model?
+
+The predicted average mass of female chinstrap is the sum of intercept (3368.84) and the speciesChinstrap (158.37). The result is 3527.21
+
+# Q8 (2 pts.): What is the observed average mass of female Chinstrap penguins, calcluated from the penguins data?
+
+```{r}
+aggregate(body_mass_g ~ sex+species, data = penguins, FUN = mean)
+aggregate(body_mass_g ~ sex*species, data = penguins, FUN = mean)
+```
+
+The observed average mass of female Chinstrap based on penguins data is 3527.206.
