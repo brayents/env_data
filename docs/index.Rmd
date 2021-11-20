@@ -5,7 +5,6 @@ output:
     html_document:
       theme: paper
       toc: true
-      number_sections: true
       toc_depth: 3
       toc_float: true
 
@@ -16,48 +15,26 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Hello world!
 
-<html>
-<head>
-  <title>Hi</title>
-</head>
-<body>
-<!--begin.rcode
-  knitr::opts_chunk$set(fig.width=5, fig.height=5)
-  end.rcode-->
-hahhaa
-  <p>This is a minimal example that shows
-  how <strong>knitr</strong> works with pure HTML
-  pages.</p>
+This is the personal pages of Briantama Asmara. Love mapping, napping, and hiking. Sometimes watch Netflix.
 
-  <p>Boring stuff as usual:</p>
+Currently pursuing Master's degree in Environmental Conservation at University Massacusetts. With 2+ years of experience in the GIS field, Brian keeps pushing through the mapping industry by learning the cutting-edge of spatial technology. Its technical prowess in GIS software (ArcGIS, QGIS) combined with a programming language (Python, Django, PostGIS) has been the core skills for various projects, such as cleaning government databases. Currently, Brian is trying to master the cartography skills by combining GIS with design software (Photoshop, Illustrator, Blender). His aspiration to achieve the level of visualization from renowned cartographers, NatGeoMaps, NY Times, and Washington Post has tremendously inspired him to become one of the best in the field.
 
-<!--begin.rcode
-    # a simple calculator
-    1 + 1
-    # boring random numbers
-    set.seed(123)
-    rnorm(5)
-    end.rcode-->
+Probably in the future will be migrating to Github from my personal website at [mapsmerizing.com](mapsmerizing.com)
 
-  <p>We can also produce plots (centered by the
-  option <code>fig.align='center'</code>):</p>
+# Analysis of Environmental Data Assignments
 
-<!--begin.rcode cars-scatter, fig.align='center'
-    plot(mpg ~ hp, data = mtcars)
-    end.rcode-->
 
-  <p>Errors, messages and warnings can be put into
-  <code>div</code>s with different <code>class</code>es:</p>
+# Projects
 
-<!--begin.rcode
-    sqrt(-1)  # warning
-    message('knitr says hello to HTML!')
-    1 + 'a'  # mission impossible
-    end.rcode-->
+Check for [Personal Storytelling from 2019](https://brayents.github.io/sostory/)
 
-  <p>Well, everything seems to be working. Let's ask R what is
-  the value of &pi;? Of course it is <!--rinline pi -->.</p>
+# Portfolio
 
-</body>
-</html>
+Check for Cartography portfolio [mapsmerizing.com](mapsmerizing.com)
+
+
+# Resume
+Resume is upcoming
+
