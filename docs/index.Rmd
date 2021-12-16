@@ -25,7 +25,7 @@ Probably in the future will be migrating to Github from my personal website at [
 
 # Analysis of Environmental Data Assignments
 
-Final Assignments are here!
+## Final Assignments are finally here!
 
 ### 1. [Final Project Part 1: R Reference Guide](https://brayents.github.io/env_data/final_R_reference)
 ### 2. [Final Project Part 2: Data Analysis](https://brayents.github.io/env_data/final_part2)
