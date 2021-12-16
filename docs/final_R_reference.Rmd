@@ -1,0 +1,277 @@
+---
+title: "Part 1: R Reference Guide"
+author: "Briantama Asmara"
+date: "12/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part 1: R Reference Guide {.tabset .tabset-pills}
+
+
+## Loading Data and Packages
+* Load here() packages and ginkgo data
+
+```{r}
+## Loading the here package to load the working directory, you need to install it first if here() didn't load
+require(here)
+here()
+
+## Load the data
+ginkgo = data.frame(read.csv(here("data", "ginkgo_data_2021.csv")))
+head(ginkgo)
+```
+* Load palmer penguins
+
+```{r}
+## Load external dataset of penguins
+library(palmerpenguins)
+head(penguins)
+```
+
+
+## Data Structures
+* c()
+
+```{r}
+
+## Assigning the values of several data
+six_delomys  = c('A', 'B', 'C', 'D', 'E', 'G', 'H', 'J')
+height_delomys = c(20,56,24,65,13,54,53,32)
+length_delomys = c(43,125,35,13,612,63,62,53)
+```
+
+* length
+
+```{r}
+# Know the length
+length = length(six_delomys)
+print(paste("The length of six_delomys data is", length))
+```
+* matrix()
+
+The matrix of the data is shown below:
+
+```{r}
+## The dimension of data
+matrix(six_delomys, nrow = 4, ncol = 2)
+```
+* data.frame()
+
+```{r}
+## Create data frame
+data.frame(six_delomys, height_delomys, length_delomys)
+```
+
+
+```{r}
+## Load the ginkgo data
+ginkgo = data.frame(read.csv(here("data", "ginkgo_data_2021.csv")))
+head(ginkgo)
+```
+
+* nrow()
+```{r}
+## Get the number of rows
+nrow = nrow(ginkgo)
+print(paste("The number of rows of ginkgo data is", nrow))
+```
+
+* ncol()
+
+```{r}
+## Get the number of columns
+ncol = ncol(ginkgo)
+print(paste("The number of rows of ginkgo data is", ncol))
+```
+
+* dim()
+
+```{r}
+## Get the dimension of the data
+dim = dim(ginkgo)
+print(paste("The dimensions of ginkgo data has the column of", dim[1], "and has the rows of", dim[2]))
+```
+
+## Subsetting
+
+* Subset a column
+```{r}
+head(ginkgo)
+```
+
+```{r}
+
+## $ Subset a data frame by name: select one of the columns in the ginkgo data
+
+seeds_ginkgo = ginkgo$seeds_present
+head(seeds_ginkgo)
+```
+
+* select first row of the ginkgo data
+```{r}
+## Select the first row (col,row)
+ginkgo[1,]
+```
+
+* select the element in row 2, column 3
+```{r}
+## Select the second row and third column (col,row)
+ginkgo[2,3]
+```
+
+* select the 3rd column of the ginkgo data
+```{r}
+## Select the third column
+ginkgo[,3]
+```
+
+* subset()
+```{r}
+## Select the data subset based on the column, according to the species Adelie
+subset(penguins, species == 'Adelie')
+```
+
+
+## Numerical Data Exploration
+* summary()
+```{r}
+summary(ginkgo)
+```
+
+* mean()
+```{r}
+mean = mean(ginkgo$notch_depth, na.rm = FALSE)
+print(paste("The mean of the notch depth of the ginkgo is", mean))
+```
+
+* sd()
+```{r}
+sd = sd(ginkgo$notch_depth, na.rm = FALSE)
+print(paste("The standard deviation of the notch depth of the ginkgo is", sd))
+```
+
+## Graphical Data Exploration
+
+* plot()
+
+```{r}
+## cex determine the size of point, pch determine the style of point
+
+plot(x= ginkgo$max_depth, 
+     y = ginkgo$max_width, 
+     main="Depth vs Width of Ginkgo Leaf", 
+     xlab="Maximum Depth", 
+     ylab="Maximum Width",
+     cex=0.8,
+     xlim=c(0, max(ginkgo$max_depth)+20),
+     ylim=c(0, max(ginkgo$max_width)+20),
+     col='blue',
+     pch=1)
+```
+
+* hist()
+
+```{r}
+hist(penguins$flipper_length_mm,
+     breaks=10,
+     main= "Histogram of Penguins' Flipper Length",
+     xlab= "Flipper Length (mm)")
+```
+
+* simple boxplot
+
+```{r}
+boxplot(ginkgo$petiole_length,
+        main="Boxplot of Petiole Length")
+```
+
+* conditional boxplot()
+
+```{r}
+boxplot(max_depth ~ seeds_present, 
+        data = ginkgo,
+        xlab =  "Seeds Present",
+        ylab = "Maximum Leaf Depth",
+        names = c("False", "True")
+        )
+```
+
+* create 4 histograms
+
+```{r, echo=TRUE, fig.height=10, fig.width=10}
+## par assign the values of row and columns of multiple plots
+
+par(mfrow = c(2, 2))
+adelie = subset(penguins, species == 'Adelie')
+gentoo = subset(penguins, species == 'Gentoo')
+
+hist(adelie$flipper_length_mm,
+     breaks=10,
+     main= "Histogram of Adelie's Flipper Length",
+     xlab= "Flipper Length (mm)")
+hist(adelie$bill_length_mm,
+     breaks=10,
+     main= "Histogram of Adelie's Bill Length",
+     xlab= "Bill Length (mm)")
+hist(gentoo$flipper_length_mm,
+     breaks=10,
+     main= "Histogram of Gentoo's Flipper Length",
+     xlab= "Flipper Length (mm)")
+hist(gentoo$bill_length_mm,
+     breaks=10,
+     main= "Histogram of Gentoo's Bill Length",
+     xlab= "Bill Length (mm)")
+```
+
+## Distribution Function
+
+* dnorm()
+
+```{r}
+## What is the probability of observing a value exactly 1.5 from a normally-distributed population with mean = 2 and standard deviation = 2?
+dnorm(1.5, mean=2, sd=2)
+```
+
+* pnorm()
+
+```{r}
+## What is the probability of observing a value of less than 1.6 from a normally-distributed population with mean = 2 and standard deviation = 2?
+
+pnorm(1.6, mean = 2, sd = 2)
+```
+
+* qnorm()
+
+```{r}
+## What is the 20th percentile of the average GRE analytical writing score of 4.5
+
+qnorm(0.2, mean=4.5, sd=1)
+```
+
+* dbinom()
+
+```{r}
+## What is the probability of observing a count of exactly 2 successes in a binomial distribution with parameters n = 5 and p = 0.75?
+
+dbinom(2,5,0.75)
+```
+
+* pbinom()
+
+
+```{r}
+## What is the probability of observing a count of 4 successes or fewer in a binomial distribution with parameters n = 5 and p = 0.75?
+pbinom(4,5, 0.75)
+```
+
+* qbinom()
+
+```{r}
+## What is the 80th percentile of 126 trials and the probability of success is 0.45
+
+qbinom(0.8, 126, 0.45)
+```

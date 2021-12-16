@@ -1,0 +1,35 @@
+---
+title: "ginkgo"
+author: "Briantama Asmara"
+date: "11/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(here)
+ginkgo = data.frame(read.csv(here("data", "ginkgo_data_2021.csv")))
+```
+```{r}
+head(ginkgo)
+```
+
+```{r}
+boxplot(notch_depth ~ seeds_present, 
+        data = ginkgo,
+        xlab =  "Seeds Present",
+        ylab = "Notch Depth",
+        names = c("False", "True")
+        )
+```
+
+```{r}
+plot(ginkgo$max_depth, ginkgo$max_width,
+     xlab="Max Leaf Depth",
+     ylab="Max Leaf Width",
+     main="Max Leaf Depth vs Max Leaf Width")
+```
+
